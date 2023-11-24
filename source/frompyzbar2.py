@@ -7,8 +7,8 @@ import csv
 import datetime
 import pyperclip
 import pyautogui
-import win32gui
-import win32con
+# import win32gui
+# import win32con
 
 #cap = cv2.VideoCapture(1)
 cap = cv2.VideoCapture(0)
@@ -23,9 +23,10 @@ time_cnt = 30        # sec 初期値
 time_interval = 30  # sec 定期実行の時間間隔
 title = 'Scan the QR Code'
 
-def foreground():
-    hwnd = win32gui.FindWindow(None, title)
-    win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,0,0,0,0,win32con.SWP_NOMOVE | win32con.SWP_NOSIZE )
+# コメント化 2023/11/24
+# def foreground():
+#     hwnd = win32gui.FindWindow(None, title)
+#     win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,0,0,0,0,win32con.SWP_NOMOVE | win32con.SWP_NOSIZE )
 
 while cap.isOpened():
     #現在時間 sec
@@ -62,6 +63,7 @@ while cap.isOpened():
                 if ret == True:
                     cv2.waitKey(1)
                     break
+
                 # 次回、定期実行する時刻 time_cntを更新
                 time_cnt = (datetime.datetime.now() - initial_time).total_seconds() + time_interval
 
