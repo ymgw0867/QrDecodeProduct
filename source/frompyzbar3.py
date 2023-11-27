@@ -10,8 +10,8 @@ import pyautogui
 # import win32gui
 # import win32con
 
-#cap = cv2.VideoCapture(1)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
+#cap = cv2.VideoCapture(0)
 font = cv2.FONT_HERSHEY_SIMPLEX
 # QRCodeDetectorを生成
 #detector = cv2.QRCodeDetector()
