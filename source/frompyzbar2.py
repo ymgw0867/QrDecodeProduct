@@ -4,7 +4,7 @@ from tkinter import messagebox
 import cv2
 import numpy as np
 import csv
-import datetime
+# import datetime
 import pyperclip
 import pyautogui
 # import win32gui
@@ -18,9 +18,10 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 wstr = ""
 lst = []
 
-initial_time = datetime.datetime.now()
-time_cnt = 30        # sec 初期値
-time_interval = 30  # sec 定期実行の時間間隔
+# コメント化 2024/02/06
+# initial_time = datetime.datetime.now()
+# time_cnt = 30        # sec 初期値
+# time_interval = 30  # sec 定期実行の時間間隔
 title = 'Scan the QR Code'
 
 # コメント化 2023/11/24
@@ -29,17 +30,18 @@ title = 'Scan the QR Code'
 #     win32gui.SetWindowPos(hwnd, win32con.HWND_BOTTOM,0,0,0,0,win32con.SWP_NOMOVE | win32con.SWP_NOSIZE )
 
 while cap.isOpened():
-    #現在時間 sec
-    current_time = (datetime.datetime.now() - initial_time).total_seconds()
-    # time_interval毎に実行する
-    if current_time >= time_cnt:
-        # メッセージボックス（はい・いいえ） 
-        ret = messagebox.askyesno('確認', 'ウィンドウを閉じますか？')
-        if ret == True:
-           cv2.waitKey(1)
-           break
-        # 次回、定期実行する時刻 time_cntを更新
-        time_cnt += time_interval
+    # コメント化 2024/02/06
+    # #現在時間 sec
+    # current_time = (datetime.datetime.now() - initial_time).total_seconds()
+    # # time_interval毎に実行する
+    # if current_time >= time_cnt:
+    #     # メッセージボックス（はい・いいえ） 
+    #     ret = messagebox.askyesno('確認', 'ウィンドウを閉じますか？')
+    #     if ret == True:
+    #        cv2.waitKey(1)
+    #        break
+    #     # 次回、定期実行する時刻 time_cntを更新
+    #     time_cnt += time_interval
 
     ret,frame = cap.read()
     if ret == True:
@@ -54,45 +56,35 @@ while cap.isOpened():
                 # lst.append([sstr, ""])
 
                 # クリップボードにコピー 2023/11/22
-                pyperclip.copy(sstr + '\n')
+                #pyperclip.copy(sstr + '\n')    # 2024/02/05 コメント化
+                pyperclip.copy(sstr + '\r\n')   # 2024/02/05 ターミナルにキャリッジリターン＋ラインフィード
+                #pyperclip.copy(sstr + '\r')    # 2024/02/05 ターミナルにキャリッジリターン
+                #pyperclip.copy(sstr)           # 2024/02/05 ターミナルなし
                 # クリップボードからペースト 2023/11/22
                 pyautogui.hotkey('ctrl', 'v')
+                
+                #pyperclip.copy('\r\n')
+                #pyautogui.hotkey('ctrl', 'v')
+                
+                # コメント化 2024/02/06
+                # # メッセージボックス（はい・いいえ） 
+                # ret = messagebox.askyesno('認識しました', wstr + '\n\n' + 'ウィンドウを閉じますか？')
+                # if ret == True:
+                #     cv2.waitKey(1)
+                #     break
 
-                # メッセージボックス（はい・いいえ） 
-                ret = messagebox.askyesno('認識しました', wstr + '\n\n' + 'ウィンドウを閉じますか？')
-                if ret == True:
-                    cv2.waitKey(1)
-                    break
-
-                # 次回、定期実行する時刻 time_cntを更新
-                time_cnt = (datetime.datetime.now() - initial_time).total_seconds() + time_interval
+                # コメント化 2024/02/06
+                # # 次回、定期実行する時刻 time_cntを更新
+                # time_cnt = (datetime.datetime.now() - initial_time).total_seconds() + time_interval
 
         cv2.imshow(title, np.array(frame)) 
 
+        # ウィンドウの表示位置を(100, 100)に設定
+        cv2.moveWindow(title, 100, 100)
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    
-    #foreground()
 
-""" while True:
-    # カメラから1フレーム読み取り倉庫
-
-    ret, frame = cap.read()
-
-    # QRコードを認識
-    data = detector.detectAndDecode(frame)
-
-    # 読み取れたらデコードした内容をprint
-    if data[0] != "":
-        print(data[0])
-
-    # ウィンドウ表示
-    cv2.imshow('frame', frame)
-
-    # Qキー押すと終了
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break 
-"""
 cap.release()
 # コメント化 2023/11/22
 # #print(lst)
