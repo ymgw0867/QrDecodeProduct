@@ -23,6 +23,7 @@ lst = []
 # time_cnt = 30        # sec 初期値
 # time_interval = 30  # sec 定期実行の時間間隔
 title = 'Scan the QR Code'
+cam_Status = True
 
 # コメント化 2023/11/24
 # def foreground():
@@ -79,8 +80,10 @@ while cap.isOpened():
 
         cv2.imshow(title, np.array(frame)) 
 
-        # ウィンドウの表示位置を(100, 100)に設定
-        cv2.moveWindow(title, 100, 100)
+        if cam_Status == True:
+            # 開始時はウィンドウの表示位置を(10, 20)に設定
+            cv2.moveWindow(title, 10, 20)
+            cam_Status = False
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
