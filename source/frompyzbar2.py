@@ -1,9 +1,9 @@
 from pyzbar.pyzbar import decode
-from PIL import Image
-from tkinter import messagebox
+# from PIL import Image
+# from tkinter import messagebox
 import cv2
 import numpy as np
-import csv
+# import csv
 # import datetime
 import pyperclip
 import pyautogui
